@@ -33,7 +33,7 @@ class PrimeNumberThread extends Thread{
 				count = count+1;
 			}
 		}
-		System.out.println("Prime circular numbers from 1 to " + maxCheck + " are:");
+		System.out.println("Prime circular numbers from "+ minCheck +" to " + maxCheck + " are:");
 		System.out.println(primeNumber);
 		System.out.println("Total Count : "+count);
 	}
