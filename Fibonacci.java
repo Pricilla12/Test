@@ -1,4 +1,4 @@
-# Class to generate fibonacci series and identify the idex of the first term in the Fibonacci sequence to contain 1000 digits
+// Class to generate fibonacci series and identify the idex of the first term in the Fibonacci sequence to contain 1000 digits
 class FibonacciSeries extends Thread{
 
 	public void run() {
