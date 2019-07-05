@@ -32,7 +32,7 @@ class NumberChainMultiT extends Thread{
 		System.out.print("Total Count : "+count);
 	}
 
-	private static int numberChain(int n) {
+	private void numberChain(int n) {
 		int sum = 0;
 		
 		try {
@@ -49,7 +49,6 @@ class NumberChainMultiT extends Thread{
 					
 				}
 				
-				return sum;
 			}
 			else {
 				System.out.print(sum + "->");
@@ -58,7 +57,7 @@ class NumberChainMultiT extends Thread{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return sum;
+	
 
 	}
 
