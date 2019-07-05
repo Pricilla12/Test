@@ -70,9 +70,10 @@ public class NumberChainThread {
 		Thread t = Thread.currentThread();
 		t.setName("Main Thread");
 		System.out.println(Thread.currentThread().getName());
+		ExecutorService executor = null;
 	    try {
 			// Start the executor process  
-			ExecutorService executor = Executors.newFixedThreadPool(10);
+			executor = Executors.newFixedThreadPool(10);
 			Runnable taskOne = new NumberChainMultiT("TaskOne", 1, 100);
 			executor.execute(taskOne);
 			Runnable tasktwo = new NumberChainMultiT("TaskOne", 100, 1000);
@@ -94,6 +95,9 @@ public class NumberChainThread {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			
+			executor.shutdown();
 		}
 	
 				
