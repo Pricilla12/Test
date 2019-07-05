@@ -10,6 +10,7 @@ class PrimeNumberThread extends Thread{
 	private String threadName;
 	private int minvalue = 1;
 	private int maxvalue = 100;
+	private static int count = 0;
 
 	public PrimeNumberThread(String threadName, int minvalue, int maxvalue) {
 		// TODO Auto-generated constructor stub
@@ -24,13 +25,13 @@ class PrimeNumberThread extends Thread{
 		int maxCheck = maxvalue;
 		boolean isPrime = false;
 		String primeNumber = "";
-		int count =0;
+		
 
 		for (int i = minCheck; i <= maxCheck; i++) {
 			isPrime = checkCircular(Integer.toString(i));
 			if (isPrime) {
 				primeNumber = primeNumber + i + " ";
-				count = count+1;
+				count++;
 			}
 		}
 		System.out.println("Prime circular numbers from "+ minCheck +" to " + maxCheck + " are:");
