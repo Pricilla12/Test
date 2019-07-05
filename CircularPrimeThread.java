@@ -92,26 +92,36 @@ public class CircularPrimeThread {
 		Thread t = Thread.currentThread();
 		t.setName("Main Thread");
 		System.out.println(Thread.currentThread().getName());
-	    // Start the executor process  
-		ExecutorService executor = Executors.newFixedThreadPool(10);
-		Runnable taskOne = new PrimeNumberThread("TaskOne", 1, 100);
-        executor.execute(taskOne);
-        Runnable tasktwo = new PrimeNumberThread("TaskOne", 100, 1000);
-        executor.execute(tasktwo);
-        Runnable taskthree = new PrimeNumberThread("Taskthree", 1000, 10000);
-        executor.execute(taskthree);
-        Runnable taskfour = new PrimeNumberThread("Taskfour", 10000, 100000);
-        executor.execute(taskfour);
-        Runnable taskfive = new PrimeNumberThread("Taskfive", 100000, 200000);
-        executor.execute(taskfive);
-        Runnable tasksix = new PrimeNumberThread("Tasksix", 200000, 500000);
-        executor.execute(tasksix);
-        Runnable taskseven = new PrimeNumberThread("Taskseven", 500000, 700000);
-        executor.execute(taskseven);
-        Runnable taskeight = new PrimeNumberThread("Taskeight", 700000, 900000);
-        executor.execute(taskeight);
-        Runnable tasknine = new PrimeNumberThread("Tasknine", 900000, 1000000);
-        executor.execute(tasknine);
+		// Start the executor process  
+		ExecutorService executor = null;
+		try {
+			executor = Executors.newFixedThreadPool(10);
+			Runnable taskOne = new PrimeNumberThread("TaskOne", 1, 100);
+			executor.execute(taskOne);
+			Runnable tasktwo = new PrimeNumberThread("TaskOne", 100, 1000);
+			executor.execute(tasktwo);
+			Runnable taskthree = new PrimeNumberThread("Taskthree", 1000, 10000);
+			executor.execute(taskthree);
+			Runnable taskfour = new PrimeNumberThread("Taskfour", 10000, 100000);
+			executor.execute(taskfour);
+			Runnable taskfive = new PrimeNumberThread("Taskfive", 100000, 200000);
+			executor.execute(taskfive);
+			Runnable tasksix = new PrimeNumberThread("Tasksix", 200000, 500000);
+			executor.execute(tasksix);
+			Runnable taskseven = new PrimeNumberThread("Taskseven", 500000, 700000);
+			executor.execute(taskseven);
+			Runnable taskeight = new PrimeNumberThread("Taskeight", 700000, 900000);
+			executor.execute(taskeight);
+			Runnable tasknine = new PrimeNumberThread("Tasknine", 900000, 1000000);
+			executor.execute(tasknine);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			executor.shutdown();
+		}
+
 	
 				
 
