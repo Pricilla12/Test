@@ -1,23 +1,25 @@
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /*
- * Code to generate number chain for ten million numbers which will arrive at 89
+ * Code to generate sequence number that ends with 1 and identify starting number under one million which 
+ * produces the longest chain
  * */
-class SeqNumberMultiT extends Thread{
+class SequenceNumberThread extends Thread{
 
 	private String name;
 	private int minvalue = 1;
 	private int maxvalue = 100;
-	private static int count = 0;
-	private static int sequencecount = 0;
-	HashMap<Integer, Integer> hash_map =  new HashMap<Integer, Integer>(); 
+	private  int count = 0;
+	private  int sequencecount = 0;
+	static ConcurrentHashMap<Integer, Integer> hash_map =  new ConcurrentHashMap<Integer, Integer>(); 
+	
 
-	public SeqNumberMultiT(String name, int minvalue, int maxvalue) {
+	public SequenceNumberThread(String name, int minvalue, int maxvalue) {
 
 		this.name = name;
 		this.minvalue = minvalue;
@@ -31,18 +33,22 @@ class SeqNumberMultiT extends Thread{
 		
 		System.out.println("Number Chain from "+ minCheck +" to " + maxCheck + " are:");
 		for (int i = minCheck; i <= maxCheck; i++) {
-		//	System.out.print(i+"->");
-			sequenceNum(i);
+			sequencecount = 0;
+			//System.out.print(i+"->");
+			System.out.println(i);
+			int response = sequenceNum(i);
+			hash_map.put(i, response);
 
 		}
-		System.out.println("Initial Mappings are: " + hash_map); 
-		System.out.println("Total Count : "+count);
+		System.out.println("Map : "+hash_map);
 		System.out.println("Number producing Largest Chain : "+Collections.max(hash_map.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey());
+		System.out.println("Comp :"+hash_map.entrySet().stream().max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getKey());
+		
 	}
 
-	private void sequenceNum(int n) {
+	private int sequenceNum(int n) {
 		int sum = 0;
-		
+		//System.out.println("N1 : "+n);
 
 		try {
 
@@ -57,16 +63,15 @@ class SeqNumberMultiT extends Thread{
 			}
 
 			if (sum == 1) {
-			//	System.out.println(sum);
+				System.out.println(sum);
 				sequencecount++;
 				count++;
-				hash_map.put(count, sequencecount);
-				sequencecount = 0;
 				
+				return sequencecount ;
 
 			}
 			else {
-			//	System.out.print(sum+"->");
+				//System.out.print(sum+"->");
 				sequencecount++;
 				sequenceNum(sum);
 			} 
@@ -75,53 +80,54 @@ class SeqNumberMultiT extends Thread{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return sequencecount;
 
 
 	}
-
-
-}
-
-public class SequenceNumberThread {
 
 	public static void main(String[] args) {
 		Thread t = Thread.currentThread();
 		t.setName("Main Thread");
 		System.out.println(Thread.currentThread().getName());
 		ExecutorService executor = null;
+		 
+		
+		
 		try {
-			// Start the executor process  
+			// Start the executor process 
+			//Todo : Forloop with each incremental value
 			executor = Executors.newFixedThreadPool(10);
-			Runnable taskOne = new SeqNumberMultiT("TaskOne", 1, 10);
+			Runnable taskOne = new SequenceNumberThread("TaskOne", 1, 100);
 			executor.execute(taskOne);
-			Runnable tasktwo = new SeqNumberMultiT("TaskOne", 21, 30);
+			Runnable tasktwo = new SequenceNumberThread("TaskOne", 101, 1000);
 			executor.execute(tasktwo);
 			
-			/*Runnable taskthree = new SeqNumberMultiT("Taskthree", 1000, 10000);
+			Runnable taskthree = new SequenceNumberThread("Taskthree", 1000, 10000);
 			executor.execute(taskthree);
-			Runnable taskfour = new SeqNumberMultiT("Taskfour", 10000, 100000);
+			Runnable taskfour = new SequenceNumberThread("Taskfour", 10000, 100000);
 			executor.execute(taskfour);
-			Runnable taskfive = new SeqNumberMultiT("Taskfive", 100000, 200000);
-			executor.execute(taskfive);
-			Runnable tasksix = new SeqNumberMultiT("Tasksix", 200000, 500000);
-			executor.execute(tasksix);
-			Runnable taskseven = new SeqNumberMultiT("Taskseven", 500000, 700000);
+		//	Runnable taskfive = new SequenceNumberThread("Taskfive", 113385, 200000);
+			//executor.execute(taskfive);
+			//Runnable tasksix = new SequenceNumberThread("Tasksix", 200000, 300000);
+			//executor.execute(tasksix);
+			/*Runnable taskseven = new SequenceNumberThread("Taskseven", 500000, 700000);
 			executor.execute(taskseven);
-			Runnable taskeight = new SeqNumberMultiT("Taskeight", 700000, 900000);
+			Runnable taskeight = new SequenceNumberThread("Taskeight", 700000, 900000);
 			executor.execute(taskeight);
-			Runnable tasknine = new SeqNumberMultiT("Tasknine", 900000, 1000000);
+			Runnable tasknine = new SequenceNumberThread("Tasknine", 900000, 1000000);
 			executor.execute(tasknine);*/
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.exit(0);
 		}finally {
 
 			executor.shutdown();
 		}
 
+}
 
 
-
-	}
 
 }
