@@ -42,7 +42,7 @@ class SequenceNumberThread extends Thread{
 		}
 		System.out.println("Map : "+hash_map);
 		System.out.println("Number producing Largest Chain : "+Collections.max(hash_map.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey());
-		System.out.println("Comp :"+hash_map.entrySet().stream().max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getKey());
+		
 		
 	}
 
